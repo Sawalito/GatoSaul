@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">GatoSaul</string>
+    <string name="espacio2"></string>
+    <string name="ganador">El ganador es:</string>
+    <string name="reiniciar">Reiniciar</string>
+</resources>
