@@ -13,7 +13,7 @@ public class MainActivity extends AppCompatActivity {
     private int[] valores1 ={R.id.button,R.id.button2,R.id.button3,R.id.button4,R.id.button5,R.id.button6,R.id.button7,
             R.id.button8,R.id.button9};
     private int[] resultado = {0,0,0,0,0,0,0,0,0};
-    private int ganador=0;
+    private int ganador=0,c=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
         TextView textView = findViewById(R.id.textView);
         Button buttonI = findViewById(R.id.button10);
         Button button = null;
+        textView.setTextSize(50);
+        textView.setText("Turno: O");
         buttonI.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -33,15 +35,22 @@ public class MainActivity extends AppCompatActivity {
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    c++;
                     if(jugador){
                         ((Button)v).setText("X");
                         jugador = false;
+                        if(c!=9){
+                            textView.setText("Turno: O");
+                        }
                     }else{
                         ((Button)v).setText("O");
                         jugador = true;
+                        if(c!=9){
+                            textView.setText("Turno: X");
+                        }
                     }
                     ((Button)v).setEnabled(false);
-                    textView.setText(((Button)v).getText());
+
                     resultado();
                     for(int i=0;i<valores1.length;i+=3){
                         if(resultado[i]==resultado[i+1]&&resultado[i]==resultado[i+2]){
@@ -90,12 +99,16 @@ public class MainActivity extends AppCompatActivity {
                         textView.setText("Hay ganador O");
                         desh();
                     }
+                    if(c==9 && ganador==0){
+                        textView.setText("Empate");
+                    }
                 }
             });
         }
 
     }
     public void rein(){
+        c=0;
         resultado= new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0};
         ganador=0;
         Button button = null;
@@ -103,6 +116,8 @@ public class MainActivity extends AppCompatActivity {
             button=findViewById(valores1[m]);
             button.setEnabled(true);
             button.setText("");
+            TextView textview = findViewById(R.id.textView);
+            textview.setText("Inicie el juego");
         }
     }
     public void desh(){
@@ -113,16 +128,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     public void resultado(){
-        TextView textView2 = findViewById(R.id.textView2);
         Button button = null;
         for(int i=0;i<valores1.length;i++){
             button = findViewById(valores1[i]);
                 if("X".equals(button.getText().toString()))
                     resultado[i]=1;
-                    textView2.setText("1");
                 if("O".equals(button.getText().toString()))
                     resultado[i]=2;
-                    textView2.setText("2");
         }
 
     }
